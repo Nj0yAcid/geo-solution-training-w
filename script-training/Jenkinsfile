@@ -43,7 +43,7 @@ pipeline{
 
         stage("Docker build"){
             steps{
-                sh 'docker build -t devop_repository'
+                sh 'docker build -t devop_repository .'
             }
         }
 
