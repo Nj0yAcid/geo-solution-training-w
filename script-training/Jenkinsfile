@@ -6,6 +6,14 @@ pipeline{
     
     
     stages{
+
+
+    stage("Sonarqube scan"){
+        withSonarQubeEnv(credentialsId: 'sonarqube_ID', installationName: 'Sonarqube') {
+            sh ''' sonar/bin/sonar-scanner -Dsonar.projectName=geoapp -Dsonar.projectKey=geoapp \
+                   -Dsonar.java.binaries=. '''
+        }
+    }
         stage("maven"){
             steps{
             sh 'mvn clean'
@@ -15,7 +23,7 @@ pipeline{
             sh 'mvn test'   
             sh 'mvn package'         
             }
- 
+
         }
 
         stage("Upload artifact to JFrog"){
